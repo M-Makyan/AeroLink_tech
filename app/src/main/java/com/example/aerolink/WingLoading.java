@@ -1,9 +1,12 @@
 package com.example.aerolink;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,23 +18,24 @@ public class WingLoading extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wing_loading);
 
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
+
         EditText inputMass = findViewById(R.id.input_mass);
         EditText inputWingArea = findViewById(R.id.input_wing_area);
         Button btnCalculate = findViewById(R.id.btn_calculate);
         TextView outputResult = findViewById(R.id.output_result);
-        Button backButton = findViewById(R.id.backButton);
         ImageView imageView = findViewById(R.id.imageView);
 
-        // Back Button
-        backButton.setOnClickListener(v -> finish());
+        outputResult.setText("Wing Cubic Loading:");
 
-        // Calculate Button
+
         btnCalculate.setOnClickListener(v -> {
             String massText = inputMass.getText().toString().trim();
             String wingAreaText = inputWingArea.getText().toString().trim();
 
             if (massText.isEmpty() || wingAreaText.isEmpty()) {
-                outputResult.setText("Please enter values for both fields.");
+                outputResult.setText("Wing Cubic Loading: Please enter values for both fields.");
                 return;
             }
 
@@ -40,7 +44,7 @@ public class WingLoading extends AppCompatActivity {
                 double wingAreaM2 = Double.parseDouble(wingAreaText);
 
                 if (massKg <= 0 || wingAreaM2 <= 0) {
-                    outputResult.setText("Mass and Wing Area must be greater than zero.");
+                    outputResult.setText("Wing Cubic Loading: Mass and Wing Area must be greater than zero.");
                     return;
                 }
 
@@ -49,9 +53,19 @@ public class WingLoading extends AppCompatActivity {
                 double wingCubicLoading = weightOunce / Math.pow(wingAreaSqFt, 1.5);
 
                 outputResult.setText("Wing Cubic Loading: " + String.format("%.2f", wingCubicLoading));
+
+                hideKeyboard();
             } catch (NumberFormatException e) {
-                outputResult.setText("Please enter valid numbers.");
+                outputResult.setText("Wing Cubic Loading: Please enter valid numbers.");
             }
         });
+    }
+
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

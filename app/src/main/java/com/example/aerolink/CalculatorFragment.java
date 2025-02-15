@@ -21,17 +21,21 @@ public class CalculatorFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_calculator, container, false);
 
         ImageButton rocketCalculatorButton = view.findViewById(R.id.btnRocketCalculator);
-        ImageButton otherCalculatorButton = view.findViewById(R.id.btnOtherCalculator);
+        ImageButton wingLoadingCalculatorButton = view.findViewById(R.id.btnWingLoadingCalculator);
+        ImageButton electricityCalculatorButton = view.findViewById(R.id.btnElectricCalculator);
 
-        // Open Rocket Calculator Activity
         rocketCalculatorButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), RocketCalculatorActivity.class);
             startActivity(intent);
         });
 
-        // Open Wing Loading Calculator Activity
-        otherCalculatorButton.setOnClickListener(v -> {
+        wingLoadingCalculatorButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), WingLoading.class);
+            startActivity(intent);
+        });
+
+        electricityCalculatorButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ElectricityCalculatorActivity.class);
             startActivity(intent);
         });
 

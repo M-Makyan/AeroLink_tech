@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "825255223265",
+    "project_id": "samsung-72fbd",
+    "storage_bucket": "samsung-72fbd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825255223265:android:29aa35d17038a93a3e3ca0",
+        "android_client_info": {
+          "package_name": "com.example.aerolink"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDncyu_3q3xCMzZqdswXlFR08Aaixj_KVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

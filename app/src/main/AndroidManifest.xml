@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -16,7 +15,6 @@
         <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,17 +22,16 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".RocketCalculatorActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AeroLink" />
+        <!-- Calculator Activities -->
+        <activity android:name=".RocketCalculatorActivity" android:exported="false" />
+        <activity android:name=".WingLoading" android:exported="false" />
+        <activity android:name=".ElectricityCalculatorActivity" android:exported="false" />
+        <activity android:name=".OhmsLawCalculatorActivity" android:exported="false" />
+        <activity android:name=".BatteryLifeEstimatorActivity" android:exported="false" />
+        <activity android:name=".SolarPanelCalculatorActivity" android:exported="false" />
 
-        <activity
-            android:name=".WingLoading"
-            android:exported="false"
-            android:theme="@style/Theme.AeroLink" />
-
+        <!-- Post-related Activities -->
+        <activity android:name=".CreatePostActivity" android:exported="false" />
 
     </application>
-
 </manifest>

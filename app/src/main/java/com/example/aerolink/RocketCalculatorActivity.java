@@ -1,9 +1,12 @@
 package com.example.aerolink;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +21,9 @@ public class RocketCalculatorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rocket_calculator);
 
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
+
         exhaustVelocityInput = findViewById(R.id.exhaustVelocityInput);
         initialMassInput = findViewById(R.id.initialMassInput);
         finalMassInput = findViewById(R.id.finalMassInput);
@@ -30,11 +36,9 @@ public class RocketCalculatorActivity extends AppCompatActivity {
 
         Button calculateButton = findViewById(R.id.calculateButton);
         Button clearButton = findViewById(R.id.clearButton);
-        Button backButton = findViewById(R.id.backButton);
 
         calculateButton.setOnClickListener(v -> calculateValues());
         clearButton.setOnClickListener(v -> clearFields());
-        backButton.setOnClickListener(v -> finish());
     }
 
     private void calculateValues() {
@@ -53,6 +57,7 @@ public class RocketCalculatorActivity extends AppCompatActivity {
             specificImpulseOutput.setText("Specific Impulse: " + String.format("%.2f s", specificImpulse));
             thrustOutput.setText("Thrust: " + String.format("%.2f N", calculatedThrust));
 
+            hideKeyboard();
         } catch (NumberFormatException e) {
             deltaVOutput.setText("Invalid input!");
             specificImpulseOutput.setText("");
@@ -70,5 +75,13 @@ public class RocketCalculatorActivity extends AppCompatActivity {
         deltaVOutput.setText("Delta-V: ");
         specificImpulseOutput.setText("Specific Impulse: ");
         thrustOutput.setText("Thrust: ");
+    }
+
+    private void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

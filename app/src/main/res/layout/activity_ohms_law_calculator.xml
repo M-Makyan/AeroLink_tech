@@ -2,9 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
-
-
+    android:padding="16dp"
+    android:paddingTop="100dp">
     <ImageButton
         android:id="@+id/btnBack"
         android:layout_width="48dp"
@@ -19,50 +18,36 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:layout_weight="1">
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-
             <EditText
-                android:id="@+id/exhaustVelocityInput"
+                android:id="@+id/voltageInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Exhaust Velocity (m/s)"
-                android:inputType="numberDecimal"
-                android:paddingTop="30dp" />
-
-            <EditText
-                android:id="@+id/initialMassInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Initial Mass (kg)"
+                android:layout_marginBottom="8dp"
+                android:hint="Voltage (V)"
                 android:inputType="numberDecimal" />
 
             <EditText
-                android:id="@+id/finalMassInput"
+                android:id="@+id/currentInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Final Mass (kg)"
+                android:layout_marginBottom="8dp"
+                android:hint="Current (A)"
                 android:inputType="numberDecimal" />
 
             <EditText
-                android:id="@+id/thrustInput"
+                android:id="@+id/resistanceInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Thrust (N)"
-                android:inputType="numberDecimal" />
-
-            <EditText
-                android:id="@+id/massFlowRateInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Mass Flow Rate (kg/s)"
+                android:layout_marginBottom="8dp"
+                android:hint="Resistance (Ω)"
                 android:inputType="numberDecimal" />
 
             <Button
@@ -77,33 +62,17 @@
                 android:id="@+id/clearButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Clear"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/blue"/>
+                android:backgroundTint="@color/blue"
+                android:text="Clear" />
 
             <TextView
-                android:id="@+id/deltaVOutput"
+                android:id="@+id/powerOutput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Delta-V: "
-                android:textSize="16sp"
-                android:layout_marginTop="16dp" />
-
-            <TextView
-                android:id="@+id/specificImpulseOutput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Specific Impulse: "
-                android:textSize="16sp"
-                android:layout_marginTop="8dp" />
-
-            <TextView
-                android:id="@+id/thrustOutput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Thrust: "
-                android:textSize="16sp"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="16dp"
+                android:text="Power: "
+                android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 

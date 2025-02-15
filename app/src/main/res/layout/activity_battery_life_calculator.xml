@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="26dp">
+    android:padding="16dp">
 
     <ImageButton
         android:id="@+id/btnBack"
@@ -19,66 +19,67 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/input_mass"
+                android:id="@+id/inputBatteryCapacity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:hint="Enter Mass (kg)"
+                android:hint="Battery Capacity (mAh)"
                 android:inputType="numberDecimal" />
 
             <EditText
-                android:id="@+id/input_wing_area"
+                android:id="@+id/inputLoad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:hint="Enter Wing Area (m²)"
+                android:hint="Load (mA)"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/inputEfficiency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Efficiency (%)"
                 android:inputType="numberDecimal" />
 
             <Button
-                android:id="@+id/btn_calculate"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnCalculateBatteryLife"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
                 android:backgroundTint="@color/blue"
                 android:text="Calculate" />
 
-            <TextView
-                android:id="@+id/output_result"
+            <Button
+                android:id="@+id/btnClear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="16dp"
-                android:text="Result will appear here"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="181dp"
-                android:contentDescription="Example Image"
-                android:src="@drawable/wing_loading" />
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/blue"
+                android:text="Clear" />
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="253dp"
-                android:layout_height="105dp"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:text="Rotate your phone and scroll down for full size chart"
-                android:textColor="@color/material_dynamic_primary80"
-                android:textSize="10sp" />
+                android:id="@+id/outputBatteryLife"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Battery Life: "
+                android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="132dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/blue"
+        android:text="Back" />
 </LinearLayout>

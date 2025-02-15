@@ -2,8 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
-
+    android:padding="16dp"
+    android:paddingTop="100dp">
 
     <ImageButton
         android:id="@+id/btnBack"
@@ -19,50 +19,44 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:layout_weight="1">
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-
             <EditText
-                android:id="@+id/exhaustVelocityInput"
+                android:id="@+id/batteryCapacityInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Exhaust Velocity (m/s)"
-                android:inputType="numberDecimal"
-                android:paddingTop="30dp" />
-
-            <EditText
-                android:id="@+id/initialMassInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Initial Mass (kg)"
+                android:layout_marginBottom="8dp"
+                android:hint="Battery Capacity (Ah)"
                 android:inputType="numberDecimal" />
 
             <EditText
-                android:id="@+id/finalMassInput"
+                android:id="@+id/panelPowerInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Final Mass (kg)"
+                android:layout_marginBottom="8dp"
+                android:hint="Panel Power (W)"
                 android:inputType="numberDecimal" />
 
             <EditText
-                android:id="@+id/thrustInput"
+                android:id="@+id/sunHoursInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Thrust (N)"
+                android:layout_marginBottom="8dp"
+                android:hint="Sunlight Hours per Day"
                 android:inputType="numberDecimal" />
 
             <EditText
-                android:id="@+id/massFlowRateInput"
+                android:id="@+id/voltageInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Mass Flow Rate (kg/s)"
+                android:layout_marginBottom="8dp"
+                android:hint="Battery Voltage (V)"
                 android:inputType="numberDecimal" />
 
             <Button
@@ -77,33 +71,41 @@
                 android:id="@+id/clearButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Clear"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/blue"/>
+                android:backgroundTint="@color/blue"
+                android:text="Clear" />
 
             <TextView
-                android:id="@+id/deltaVOutput"
+                android:id="@+id/chargeEstimateOutput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Delta-V: "
-                android:textSize="16sp"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="16dp"
+                android:text="Battery Charge Estimate: -"
+                android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/specificImpulseOutput"
+                android:id="@+id/panelSizeOutput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Specific Impulse: "
-                android:textSize="16sp"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:text="Required Panel Size: -"
+                android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/thrustOutput"
+                android:id="@+id/dailyEnergyOutput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Thrust: "
-                android:textSize="16sp"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:text="Daily Solar Energy: -"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/chargeTimeOutput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Full Charge Time: -"
+                android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 
