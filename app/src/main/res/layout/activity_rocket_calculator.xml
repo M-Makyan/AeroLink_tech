@@ -1,0 +1,102 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/exhaustVelocityInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Exhaust Velocity (m/s)"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/initialMassInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Initial Mass (kg)"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/finalMassInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Final Mass (kg)"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/thrustInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Thrust (N)"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/massFlowRateInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Mass Flow Rate (kg/s)"
+                android:inputType="numberDecimal" />
+
+            <Button
+                android:id="@+id/calculateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/blue"
+                android:text="Calculate" />
+
+            <Button
+                android:id="@+id/clearButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Clear"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/blue"/>
+
+            <TextView
+                android:id="@+id/deltaVOutput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delta-V: "
+                android:textSize="16sp"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:id="@+id/specificImpulseOutput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Specific Impulse: "
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/thrustOutput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thrust: "
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="132dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/blue"
+        android:text="Back" />
+</LinearLayout>
