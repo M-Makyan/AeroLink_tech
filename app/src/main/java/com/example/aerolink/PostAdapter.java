@@ -1,5 +1,6 @@
 package com.example.aerolink;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,7 +8,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 import java.util.List;
+
+import android.text.format.DateUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
+import java.util.List;
+import java.util.TimeZone;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
@@ -27,14 +41,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Post post = postList.get(position);
-        holder.titleText.setText(post.getTitle());
-        holder.descriptionText.setText(post.getDescription());
+        holder.title.setText(post.getTitle());
+        holder.description.setText(post.getDescription());
 
-        if (post.getImageUri() != null) {
-            holder.imageView.setVisibility(View.VISIBLE);
-            holder.imageView.setImageURI(post.getImageUri());
+        if (post.getImageUrl() != null) {
+            Glide.with(holder.itemView.getContext()).load(post.getImageUrl()).into(holder.image);
         } else {
-            holder.imageView.setVisibility(View.GONE);
+            holder.image.setVisibility(View.GONE);
         }
     }
 
@@ -43,15 +56,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         return postList.size();
     }
 
-    public static class PostViewHolder extends RecyclerView.ViewHolder {
-        TextView titleText, descriptionText;
-        ImageView imageView;
+    static class PostViewHolder extends RecyclerView.ViewHolder {
+        TextView title, description, timePosted;
+        ImageView image;
 
-        public PostViewHolder(@NonNull View itemView) {
+        public PostViewHolder(View itemView) {
             super(itemView);
-            titleText = itemView.findViewById(R.id.postTitle);
-            descriptionText = itemView.findViewById(R.id.postDescription);
-            imageView = itemView.findViewById(R.id.postImage);
+            title = itemView.findViewById(R.id.postTitle);
+            description = itemView.findViewById(R.id.postDescription);
+            image = itemView.findViewById(R.id.postImage);
         }
     }
 }

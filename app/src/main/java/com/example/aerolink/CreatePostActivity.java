@@ -1,6 +1,5 @@
 package com.example.aerolink;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,7 +7,9 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,25 +28,28 @@ public class CreatePostActivity extends AppCompatActivity {
     private ImageView selectedImage;
     private Uri imageUri;
     private Button uploadImageButton, postButton;
-    private ProgressDialog progressDialog;
+    private ProgressBar progressBar;
 
-    private FirebaseFirestore db;
-    private StorageReference storageRef;
+    private FirebaseStorage storage;
+    private FirebaseFirestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
 
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
+
         titleInput = findViewById(R.id.titleInput);
         descriptionInput = findViewById(R.id.descriptionInput);
         selectedImage = findViewById(R.id.selectedImage);
         uploadImageButton = findViewById(R.id.uploadImageButton);
         postButton = findViewById(R.id.postButton);
-        progressDialog = new ProgressDialog(this);
+        progressBar = findViewById(R.id.progressBar);
 
-        db = FirebaseFirestore.getInstance();
-        storageRef = FirebaseStorage.getInstance().getReference("post_images");
+        storage = FirebaseStorage.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
         uploadImageButton.setOnClickListener(v -> openImagePicker());
         postButton.setOnClickListener(v -> createPost());
@@ -75,42 +79,48 @@ public class CreatePostActivity extends AppCompatActivity {
             return;
         }
 
-        progressDialog.setMessage("Posting...");
-        progressDialog.show();
+        progressBar.setVisibility(View.VISIBLE);
+        postButton.setEnabled(false);
+        uploadImageButton.setEnabled(false);
 
         if (imageUri != null) {
-            uploadImageToFirebase(title, description);
+            uploadImageToFirebase(title, description, imageUri);
         } else {
             savePostToFirestore(title, description, null);
         }
     }
 
-    private void uploadImageToFirebase(String title, String description) {
-        StorageReference fileRef = storageRef.child(System.currentTimeMillis() + ".jpg");
-        fileRef.putFile(imageUri)
-                .addOnSuccessListener(taskSnapshot -> fileRef.getDownloadUrl()
-                        .addOnSuccessListener(uri -> savePostToFirestore(title, description, uri.toString())))
-                .addOnFailureListener(e -> {
-                    progressDialog.dismiss();
-                    Toast.makeText(CreatePostActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
-                });
+    private void uploadImageToFirebase(String title, String description, Uri imageUri) {
+        StorageReference storageRef = storage.getReference().child("post_images/" + System.currentTimeMillis() + ".jpg");
+
+        storageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot ->
+                storageRef.getDownloadUrl().addOnSuccessListener(uri ->
+                        savePostToFirestore(title, description, uri.toString())
+                )
+        ).addOnFailureListener(e -> {
+            progressBar.setVisibility(View.GONE);
+            postButton.setEnabled(true);
+            uploadImageButton.setEnabled(true);
+            Toast.makeText(CreatePostActivity.this, "Image upload failed! " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void savePostToFirestore(String title, String description, String imageUrl) {
         Map<String, Object> post = new HashMap<>();
         post.put("title", title);
         post.put("description", description);
-        if (imageUrl != null) post.put("imageUrl", imageUrl);
+        post.put("imageUrl", imageUrl);
+        post.put("timestamp", System.currentTimeMillis()); // Add timestamp field
 
-        db.collection("posts").add(post)
+        firestore.collection("posts").add(post)
                 .addOnSuccessListener(documentReference -> {
-                    progressDialog.dismiss();
-                    Toast.makeText(CreatePostActivity.this, "Post created successfully!", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(CreatePostActivity.this, "Post uploaded!", Toast.LENGTH_SHORT).show();
                     finish();
                 })
                 .addOnFailureListener(e -> {
-                    progressDialog.dismiss();
-                    Toast.makeText(CreatePostActivity.this, "Failed to create post", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(CreatePostActivity.this, "Failed to upload post!", Toast.LENGTH_SHORT).show();
                 });
     }
 }

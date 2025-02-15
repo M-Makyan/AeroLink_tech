@@ -2,6 +2,7 @@ package com.example.aerolink;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.Query;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,8 @@ public class HomeFragment extends Fragment {
     private List<Post> postList;
     private FirebaseFirestore db;
 
-    public HomeFragment() {}
+    public HomeFragment() {
+    }
 
     @Nullable
     @Override
@@ -39,7 +42,8 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(postAdapter);
 
         db = FirebaseFirestore.getInstance();
-        loadPostsFromFirestore();
+
+        listenForPosts();
 
         FloatingActionButton fabAddPost = view.findViewById(R.id.fabAddPost);
         fabAddPost.setOnClickListener(v -> startActivity(new Intent(getActivity(), CreatePostActivity.class)));
@@ -47,18 +51,26 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void loadPostsFromFirestore() {
-        db.collection("posts").get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                postList.clear();
-                for (QueryDocumentSnapshot document : task.getResult()) {
-                    String title = document.getString("title");
-                    String description = document.getString("description");
-                    String imageUrl = document.getString("imageUrl");
-                    postList.add(new Post(title, description, imageUrl));
-                }
-                postAdapter.notifyDataSetChanged();
-            }
-        });
+    private void listenForPosts() {
+        db.collection("posts")
+                .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING) // Sort by newest first
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        Log.e("FirestoreError", "Error getting documents: ", error);
+                        return;
+                    }
+
+                    if (value == null || value.isEmpty()) {
+                        Log.d("Firestore", "No posts found");
+                        return;
+                    }
+
+                    postList.clear();
+                    for (DocumentSnapshot doc : value.getDocuments()) {
+                        Post post = doc.toObject(Post.class);
+                        postList.add(post);
+                    }
+                    postAdapter.notifyDataSetChanged();
+                });
     }
 }

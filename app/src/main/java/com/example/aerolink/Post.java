@@ -1,35 +1,22 @@
 package com.example.aerolink;
 
-import android.net.Uri;
+import com.google.firebase.firestore.ServerTimestamp;
+import java.util.Date;
 
 public class Post {
     private String title;
     private String description;
-    private Uri imageUri;
+    private String imageUrl;
 
-    // Constructor accepting String (for Firebase retrieval)
-    public Post(String title, String description, String imageUri) {
+    public Post() {} // Required empty constructor for Firestore
+
+    public Post(String title, String description, String imageUrl) {
         this.title = title;
         this.description = description;
-        this.imageUri = (imageUri != null && !imageUri.isEmpty()) ? Uri.parse(imageUri) : null;
+        this.imageUrl = imageUrl;
     }
 
-    // Constructor accepting Uri
-    public Post(String title, String description, Uri imageUri) {
-        this.title = title;
-        this.description = description;
-        this.imageUri = imageUri;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Uri getImageUri() {
-        return imageUri;
-    }
+    public String getTitle() { return title; }
+    public String getDescription() { return description; }
+    public String getImageUrl() { return imageUrl; }
 }
