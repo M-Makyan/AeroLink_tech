@@ -4,22 +4,50 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/white">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@android:drawable/ic_menu_gallery"
+        android:scaleType="centerCrop"
+        android:background="@drawable/circle_background" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:text="Username"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp" />
 
-        <ImageButton
-            android:id="@+id/btnRocketCalculator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_profile"
-            android:contentDescription="Rocket Calculator" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="user@example.com"
+        android:textSize="14sp"
+        android:textColor="@color/blue"
+        android:layout_marginTop="2dp" />
 
+    <Button
+        android:id="@+id/editProfileButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:backgroundTint="@color/blue"
+        android:textColor="@color/white"
+        android:layout_marginTop="14dp" />
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:backgroundTint="@color/blue"
+        android:textColor="@color/white"
+        android:layout_marginTop="6dp" />
 </LinearLayout>

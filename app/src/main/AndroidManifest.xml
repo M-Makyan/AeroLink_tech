@@ -12,6 +12,12 @@
         android:theme="@style/Theme.AeroLink"
         tools:targetApi="31">
 
+        <activity android:name=".LoginActivity"
+            android:exported="true">
+        </activity>
+
+        <activity android:name=".RegisterActivity" />
+
         <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
@@ -21,6 +27,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
 
         <!-- Calculator Activities -->
         <activity android:name=".RocketCalculatorActivity" android:exported="false" />

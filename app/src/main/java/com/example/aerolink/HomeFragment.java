@@ -14,11 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +46,7 @@ public class HomeFragment extends Fragment {
 
         db = FirebaseFirestore.getInstance();
 
-        listenForPosts(); // Automatic real-time updates
+        listenForPosts();
 
         FloatingActionButton fabAddPost = view.findViewById(R.id.fabAddPost);
         fabAddPost.setOnClickListener(v -> startActivity(new Intent(getActivity(), CreatePostActivity.class)));
@@ -59,7 +56,7 @@ public class HomeFragment extends Fragment {
 
     private void listenForPosts() {
         db.collection("posts")
-                .orderBy("timestamp", Query.Direction.DESCENDING) // Sort by newest first
+                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .addSnapshotListener((value, error) -> {
                     if (error != null) {
                         Log.e("FirestoreError", "Error getting documents: ", error);
@@ -85,7 +82,7 @@ public class HomeFragment extends Fragment {
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(task -> {
-                    swipeRefreshLayout.setRefreshing(false); // Stop the loading animation
+                    swipeRefreshLayout.setRefreshing(false);
                     if (task.isSuccessful() && task.getResult() != null) {
                         postList.clear();
                         for (DocumentSnapshot doc : task.getResult()) {
