@@ -37,6 +37,7 @@
         <activity android:name=".OhmsLawCalculatorActivity" android:exported="false" />
         <activity android:name=".BatteryLifeEstimatorActivity" android:exported="false" />
         <activity android:name=".SolarPanelCalculatorActivity" android:exported="false" />
+        <activity android:name=".PostDetailActivity" />
 
         <!-- Post-related Activities -->
         <activity android:name=".CreatePostActivity" android:exported="false" />

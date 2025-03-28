@@ -1,6 +1,7 @@
 package com.example.aerolink;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,11 +45,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.title.setText(post.getTitle());
         holder.description.setText(post.getDescription());
 
-        if (post.getImageUrl() != null) {
+        // Load image using Glide (if applicable)
+        if (post.getImageUrl() != null && !post.getImageUrl().isEmpty()) {
             Glide.with(holder.itemView.getContext()).load(post.getImageUrl()).into(holder.image);
-        } else {
-            holder.image.setVisibility(View.GONE);
         }
+
+        // Open post details when clicked
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(view.getContext(), com.example.aerolink.PostDetailActivity.class);
+            intent.putExtra("title", post.getTitle());
+            intent.putExtra("description", post.getDescription());
+            intent.putExtra("imageUrl", post.getImageUrl());
+            view.getContext().startActivity(intent);
+        });
     }
 
     @Override
