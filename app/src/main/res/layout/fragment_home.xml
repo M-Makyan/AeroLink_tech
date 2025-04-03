@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background">  <!-- Same background as the first layout -->
 
     <!-- Search Bar -->
     <EditText
@@ -21,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/searchBar"
-        android:layout_marginTop="-19dp">
+        android:layout_marginTop="8dp">  <!-- Added margin to make space for the search bar -->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
