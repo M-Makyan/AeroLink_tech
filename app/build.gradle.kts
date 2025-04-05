@@ -48,4 +48,6 @@ dependencies {
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+    implementation ("com.mapbox.maps:android:11.11.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
 }

@@ -17,8 +17,8 @@
 
     <item
         android:id="@+id/nav_search"
-        android:icon="@drawable/ic_search"
-        android:title="Search"
+        android:icon="@drawable/nav_map"
+        android:title="Map"
         app:showAsAction="ifRoom"
         app:iconSize="30dp"/> <!-- Increased icon size -->
 
