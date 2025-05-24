@@ -44,6 +44,11 @@
         <activity android:name=".OhmsLawCalculatorActivity" android:exported="false" />
         <activity android:name=".BatteryLifeEstimatorActivity" android:exported="false" />
         <activity android:name=".SolarPanelCalculatorActivity" android:exported="false" />
+        <activity android:name=".RCCircuitCalculatorActivity" android:exported="false" />
+        <activity android:name=".ReactanceCalculatorActivity" android:exported="false" />
+        <activity android:name=".PowerSupplyCalculatorActivity" android:exported="false" />
+        <activity android:name=".WireGaugeCalculatorActivity" android:exported="false" />
+        <activity android:name=".CannonCalculatorActivity" android:exported="false" />
         <activity android:name=".PostDetailActivity" />
 
         <!-- Post-related Activities -->

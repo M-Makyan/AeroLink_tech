@@ -1,6 +1,88 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- res/layout/activity_wire_gauge_calculator.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:paddingTop="100dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="start"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="Go Back"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back_arrow" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/currentInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Load Current (A)"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/lengthInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Wire Length (m, one-way)"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/voltageDropInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Allowed Voltage Drop (V)"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="16dp" />
+
+            <Button
+                android:id="@+id/calculateButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Calculate"
+                android:backgroundTint="@color/blue" />
+
+            <Button
+                android:id="@+id/clearButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Clear"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/blue" />
+
+            <TextView
+                android:id="@+id/areaOutput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Area: -"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:id="@+id/gaugeOutput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="AWG: -"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

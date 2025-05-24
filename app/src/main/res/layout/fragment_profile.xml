@@ -7,16 +7,18 @@
     android:padding="16dp"
     android:background="@color/white">
 
+    <!-- Profile picture -->
     <ImageView
-        android:id="@+id/profileImage"
+        android:id="@+id/profileImageView"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@android:drawable/ic_menu_gallery"
         android:scaleType="centerCrop"
         android:background="@drawable/circle_background" />
 
+    <!-- Username -->
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/userNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Username"
@@ -24,8 +26,9 @@
         android:textStyle="bold"
         android:layout_marginTop="10dp" />
 
+    <!-- Email -->
     <TextView
-        android:id="@+id/email"
+        android:id="@+id/emailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="user@example.com"
@@ -33,21 +36,42 @@
         android:textColor="@color/blue"
         android:layout_marginTop="2dp" />
 
-    <Button
-        android:id="@+id/editProfileButton"
+    <!-- Notifications toggle -->
+    <Switch
+        android:id="@+id/notificationsSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit"
+        android:text="Enable Notifications"
+        android:layout_marginTop="12dp" />
+
+    <!-- My Posts button -->
+    <Button
+        android:id="@+id/btnViewMyPosts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Posts"
         android:backgroundTint="@color/blue"
         android:textColor="@color/white"
         android:layout_marginTop="14dp" />
 
+    <!-- Edit Profile (Save) button -->
     <Button
-        android:id="@+id/logoutButton"
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:backgroundTint="@color/blue"
+        android:textColor="@color/white"
+        android:layout_marginTop="6dp" />
+
+    <!-- Logout button -->
+    <Button
+        android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Logout"
         android:backgroundTint="@color/blue"
         android:textColor="@color/white"
         android:layout_marginTop="6dp" />
+
 </LinearLayout>

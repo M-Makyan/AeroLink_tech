@@ -2,42 +2,76 @@ package com.example.aerolink;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 
 public class PostDetailActivity extends AppCompatActivity {
-    private TextView titleText, descriptionText;
-    private ImageView postImage, backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_detail);
+        setContentView(R.layout.activity_post_detail);  // ensure this is your detail-layout
 
-        titleText = findViewById(R.id.detail_title);
-        descriptionText = findViewById(R.id.detail_description);
-        postImage = findViewById(R.id.detail_image);
-        backButton = findViewById(R.id.back_button);
+        // Wire up views
+        ImageView backBtn         = findViewById(R.id.back_button);
+        ImageView creatorImage    = findViewById(R.id.creator_image);
+        TextView  creatorUsername = findViewById(R.id.creator_username);
+        TextView  detailTimestamp = findViewById(R.id.detail_timestamp);
+        TextView  detailTitle     = findViewById(R.id.detail_title);
+        ImageView detailImage     = findViewById(R.id.detail_image);
+        TextView  detailDesc      = findViewById(R.id.detail_description);
 
-        // Get post details from intent
-        Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
-        String description = intent.getStringExtra("description");
-        String imageUrl = intent.getStringExtra("imageUrl");
+        // Back action
+        backBtn.setOnClickListener(v -> finish());
 
-        titleText.setText(title);
-        descriptionText.setText(description);
+        // Grab all the extras
+        Intent intent    = getIntent();
+        String title     = intent.getStringExtra("title");
+        String desc      = intent.getStringExtra("description");
+        String imgUrl    = intent.getStringExtra("imageUrl");
+        String username  = intent.getStringExtra("username");
+        long   timestamp = intent.getLongExtra("timestamp", 0L);
 
-        // Load image if available
-        if (imageUrl != null && !imageUrl.isEmpty()) {
-            Glide.with(this).load(imageUrl).into(postImage);
+        // Bind the username
+        if (username != null && !username.isEmpty()) {
+            creatorUsername.setText(username);
         } else {
-            postImage.setVisibility(ImageView.GONE);
+            creatorUsername.setText("Unknown");
         }
 
-        // Set up the back button functionality
-        backButton.setOnClickListener(v -> onBackPressed());
+        // (Optional) load creator’s profile pic if you passed one
+        String profileUrl = intent.getStringExtra("profileImageUrl");
+        if (profileUrl != null && !profileUrl.isEmpty()) {
+            Glide.with(this)
+                    .load(profileUrl)
+                    .circleCrop()
+                    .into(creatorImage);
+        }
+
+        // Bind time-ago
+        CharSequence ago = DateUtils.getRelativeTimeSpanString(
+                timestamp,
+                System.currentTimeMillis(),
+                DateUtils.MINUTE_IN_MILLIS
+        );
+        detailTimestamp.setText(ago);
+
+        // Bind title & description
+        detailTitle.setText(title);
+        detailDesc.setText(desc);
+
+        // Bind post image (hide if none)
+        if (imgUrl != null && !imgUrl.isEmpty()) {
+            detailImage.setVisibility(View.VISIBLE);
+            Glide.with(this)
+                    .load(imgUrl)
+                    .into(detailImage);
+        }
     }
 }

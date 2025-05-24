@@ -1,4 +1,4 @@
-<!-- res/layout/activity_pcb_calculator.xml -->
+<!-- res/layout/activity_projectile_motion_calculator.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="16dp"
@@ -29,59 +29,35 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/lengthInput"
+                android:id="@+id/speedInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Board Length (mm)"
+                android:hint="Initial Speed (m/s)"
                 android:inputType="numberDecimal"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="8dp" />
 
             <EditText
-                android:id="@+id/widthInput"
+                android:id="@+id/angleInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Board Width (mm)"
+                android:hint="Launch Angle (°)"
                 android:inputType="numberDecimal"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="8dp" />
 
             <EditText
-                android:id="@+id/layersInput"
+                android:id="@+id/heightInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Number of Layers"
+                android:hint="Initial Height (m)"
                 android:inputType="numberDecimal"
-                android:layout_marginBottom="8dp"/>
-
-            <EditText
-                android:id="@+id/copperWeightInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Copper Weight (oz)"
-                android:inputType="numberDecimal"
-                android:layout_marginBottom="8dp"/>
-
-            <EditText
-                android:id="@+id/quantityInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Quantity"
-                android:inputType="number"
-                android:layout_marginBottom="8dp"/>
-
-            <EditText
-                android:id="@+id/priceInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Price per cm²"
-                android:inputType="numberDecimal"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp" />
 
             <Button
                 android:id="@+id/calculateButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Calculate"
-                android:backgroundTint="@color/blue"/>
+                android:backgroundTint="@color/blue" />
 
             <Button
                 android:id="@+id/clearButton"
@@ -89,39 +65,31 @@
                 android:layout_height="wrap_content"
                 android:text="Clear"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/blue"/>
+                android:backgroundTint="@color/blue" />
 
             <TextView
-                android:id="@+id/boardAreaOutput"
+                android:id="@+id/timeOutput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Total Board Area: -"
+                android:text="Time of Flight: -"
                 android:textSize="16sp"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp" />
 
             <TextView
-                android:id="@+id/costPerBoardOutput"
+                android:id="@+id/heightOutput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cost per Board: -"
+                android:text="Max Height: -"
                 android:textSize="16sp"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp" />
 
             <TextView
-                android:id="@+id/totalCostOutput"
+                android:id="@+id/rangeOutput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Total Cost: -"
+                android:text="Range: -"
                 android:textSize="16sp"
-                android:layout_marginTop="8dp"/>
-
-            <TextView
-                android:id="@+id/boardsPerPanelOutput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Boards per Panel: -"
-                android:textSize="16sp"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp" />
 
         </LinearLayout>
     </ScrollView>

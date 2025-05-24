@@ -23,6 +23,7 @@ public class CalculatorFragment extends Fragment {
         ImageButton rocketCalculatorButton = view.findViewById(R.id.btnRocketCalculator);
         ImageButton wingLoadingCalculatorButton = view.findViewById(R.id.btnWingLoadingCalculator);
         ImageButton electricityCalculatorButton = view.findViewById(R.id.btnElectricCalculator);
+        ImageButton cannonCalculatorButton = view.findViewById(R.id.btnOtherCalculator2);
 
         rocketCalculatorButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), RocketCalculatorActivity.class);
@@ -36,6 +37,11 @@ public class CalculatorFragment extends Fragment {
 
         electricityCalculatorButton.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), ElectricityCalculatorActivity.class);
+            startActivity(intent);
+        });
+
+        cannonCalculatorButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), CannonCalculatorActivity.class);
             startActivity(intent);
         });
 

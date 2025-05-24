@@ -13,13 +13,13 @@
         android:padding="8dp"
         android:layout_marginBottom="8dp"
         android:clickable="true"
-        android:focusable="true"/>
+        android:focusable="true" />
 
-    <!-- Creator Info: Profile Image and Username -->
+    <!-- Creator Info: Profile Image, Username & Timestamp -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:paddingBottom="8dp">
 
         <!-- Creator Profile Image -->
@@ -28,29 +28,49 @@
             android:layout_width="68dp"
             android:layout_height="63dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="15dp"
             android:contentDescription="Creator Profile Image"
-            android:src="@drawable/ic_profile" />
+            android:src="@drawable/ohms_law" />
 
-        <!-- Creator Username next to the image -->
-        <TextView
-            android:id="@+id/creator_username"
+        <!-- Username + Time Posted stacked vertically -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Username"
-            android:textSize="16sp"
-            android:layout_gravity="center_vertical"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <!-- Creator Username -->
+            <TextView
+                android:id="@+id/creator_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="markmakyan"
+                android:textSize="24sp"
+                android:textStyle="italic"
+                android:textColor="@color/black" />
+
+            <!-- Time Posted -->
+            <TextView
+                android:id="@+id/detail_timestamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2 hours ago"
+                android:textSize="14sp"
+                android:textColor="@color/blue"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
     </LinearLayout>
 
-    <!-- Post Title (below the creator info) -->
+    <!-- Post Title -->
     <TextView
         android:id="@+id/detail_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:textSize="34sp"
         android:textStyle="bold"
-        android:paddingBottom="8dp"/>
+        android:textColor="@color/black" />
 
     <!-- Post Image -->
     <ImageView
@@ -58,13 +78,15 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_marginBottom="12dp" />
 
     <!-- Post Description -->
     <TextView
         android:id="@+id/detail_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"/>
+        android:textSize="20sp"
+        android:textColor="@color/black" />
 
 </LinearLayout>

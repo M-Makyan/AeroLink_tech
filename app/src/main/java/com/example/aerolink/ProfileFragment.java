@@ -34,11 +34,11 @@ import java.io.IOException;
 public class ProfileFragment extends Fragment {
 
     private FirebaseAuth mAuth;
-    private Button btnLogout, saveButton;
-    private TextView txtUserEmail, userNameTextView, emailTextView;
+    private Button btnLogout, saveButton, btnViewMyPosts;
+    private TextView userNameTextView, emailTextView;
     private ImageView profileImageView;
     private Switch notificationsSwitch;
-    private static final int PICK_IMAGE_REQUEST = 1; // Code for picking image
+    private static final int PICK_IMAGE_REQUEST = 1;
     private static final int TAKE_PHOTO_REQUEST = 2;
     private static final int CAMERA_PERMISSION_CODE = 100;
     private static final int STORAGE_PERMISSION_CODE = 101;
@@ -51,88 +51,78 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_account, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        // Initialize FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
 
-        // Initialize views
         profileImageView = view.findViewById(R.id.profileImageView);
         userNameTextView = view.findViewById(R.id.userNameTextView);
-        emailTextView = view.findViewById(R.id.emailTextView);
+        emailTextView    = view.findViewById(R.id.emailTextView);
         notificationsSwitch = view.findViewById(R.id.notificationsSwitch);
-        saveButton = view.findViewById(R.id.saveButton);
-        btnLogout = view.findViewById(R.id.btnLogout);
+        saveButton      = view.findViewById(R.id.saveButton);
+        btnLogout       = view.findViewById(R.id.btnLogout);
+        btnViewMyPosts  = view.findViewById(R.id.btnViewMyPosts);  // Correct ID
 
-        // Initialize SharedPreferences
+        sharedPreferences = requireActivity().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
         profileImageView.setOnClickListener(v -> showProfileImageOptionsDialog());
-        sharedPreferences = getActivity().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
 
-        // Load saved preferences
         loadPreferences();
 
-        // Set the user's info (if logged in)
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
+            userNameTextView.setText(currentUser.getDisplayName());
             emailTextView.setText(currentUser.getEmail());
             loadProfileImage(currentUser);
         }
 
-        // Set listener for the save button
         saveButton.setOnClickListener(v -> savePreferences());
 
-        // Set listener for the logout button
         btnLogout.setOnClickListener(v -> {
             mAuth.signOut();
-            startActivity(new Intent(getActivity(), LoginActivity.class));
-            getActivity().finish();
+            startActivity(new Intent(requireContext(), LoginActivity.class));
+            requireActivity().finish();
+        });
+
+        btnViewMyPosts.setOnClickListener(v -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new MyPostsFragment())
+                    .addToBackStack(null)
+                    .commit();
         });
 
         return view;
     }
 
     private void showProfileImageOptionsDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Profile Picture Options")
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Profile Picture Options")
                 .setItems(new CharSequence[]{"Change Picture", "Delete Picture"}, (dialog, which) -> {
-                    if (which == 0) { // Change Picture selected
-                        showImagePickerDialog();
-                    } else if (which == 1) { // Delete Picture selected
-                        deleteProfilePicture();
-                    }
+                    if (which == 0) showImagePickerDialog();
+                    else deleteProfilePicture();
                 })
-                .create().show();
+                .show();
     }
 
     private void deleteProfilePicture() {
-        // Reset the profile image to the default one
-        profileImageView.setImageResource(R.drawable.ohms_law);  // Replace "default_profile" with your default image
-
-        // Optionally, show a Toast message indicating success
-        Toast.makeText(getActivity(), "Profile picture deleted", Toast.LENGTH_SHORT).show();
+        profileImageView.setImageResource(R.drawable.ohms_law);
+        Toast.makeText(getContext(), "Profile picture deleted", Toast.LENGTH_SHORT).show();
     }
 
     private void showImagePickerDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Choose Profile Picture")
-                .setItems(new CharSequence[]{"Camera", "Gallery"}, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0) { // Camera option selected
-                            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
-                                    != PackageManager.PERMISSION_GRANTED) {
-                                ActivityCompat.requestPermissions(getActivity(),
-                                        new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
-                            } else {
-                                openCamera();
-                            }
-                        } else if (which == 1) { // Gallery option selected
-                            openGallery();
-                        }
-                    }
+        String[] options = {"Camera", "Gallery"};
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Choose Profile Picture")
+                .setItems(options, (dialog, which) -> {
+                    if (which == 0) {
+                        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+                                != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(requireActivity(),
+                                    new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
+                        } else openCamera();
+                    } else openGallery();
                 })
-                .create().show();
+                .show();
     }
 
     private void openGallery() {
@@ -141,87 +131,66 @@ public class ProfileFragment extends Fragment {
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
-    // Open the camera to take a photo
     private void openCamera() {
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, TAKE_PHOTO_REQUEST);
     }
-    // Method to load saved preferences (dark mode, notifications)
+
     private void loadPreferences() {
-        boolean isDarkMode = sharedPreferences.getBoolean("dark_mode", false);
-        boolean isNotificationsEnabled = sharedPreferences.getBoolean("notifications_enabled", true);
-
-        notificationsSwitch.setChecked(isNotificationsEnabled);
-
-        if (isDarkMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        boolean isDark = sharedPreferences.getBoolean("dark_mode", false);
+        notificationsSwitch.setChecked(sharedPreferences.getBoolean("notifications_enabled", true));
+        AppCompatDelegate.setDefaultNightMode(
+                isDark ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
+        );
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == getActivity().RESULT_OK) {
-            if (requestCode == PICK_IMAGE_REQUEST) {
-                Uri selectedImageUri = data.getData();
-                try {
-                    Bitmap selectedImageBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImageUri);
-                    profileImageView.setImageBitmap(selectedImageBitmap);  // Set the image in the ImageView
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(), "Failed to load image", Toast.LENGTH_SHORT).show();
+            try {
+                Uri selectedUri = data.getData();
+                if (requestCode == PICK_IMAGE_REQUEST && selectedUri != null) {
+                    Bitmap bmp = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), selectedUri);
+                    profileImageView.setImageBitmap(bmp);
+                } else if (requestCode == TAKE_PHOTO_REQUEST) {
+                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+                    profileImageView.setImageBitmap(photo);
                 }
-            } else if (requestCode == TAKE_PHOTO_REQUEST) {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                profileImageView.setImageBitmap(photo);  // Set the captured photo in the ImageView
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), "Failed to load image", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == CAMERA_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openCamera();
-            } else {
-                Toast.makeText(getActivity(), "Camera permission is required to take a photo", Toast.LENGTH_SHORT).show();
-            }
-        } else if (requestCode == STORAGE_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openGallery();
-            } else {
-                Toast.makeText(getActivity(), "Storage permission is required to pick an image", Toast.LENGTH_SHORT).show();
-            }
+        if (requestCode == CAMERA_PERMISSION_CODE && grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            openCamera();
+        } else if (requestCode == STORAGE_PERMISSION_CODE && grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            openGallery();
+        } else {
+            Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Method to save preferences
     private void savePreferences() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("notifications_enabled", notificationsSwitch.isChecked());
-
-        // Optionally, you can save user info as well
         editor.putString("user_name", userNameTextView.getText().toString());
         editor.putString("user_email", emailTextView.getText().toString());
-
-        // Apply the changes
         editor.apply();
-
-        // Provide feedback to the user
-        Toast.makeText(getActivity(), "Settings saved successfully!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Settings saved successfully!", Toast.LENGTH_SHORT).show();
     }
 
-    // Method to load the user's profile image from Firebase Authentication (getPhotoUrl)
     private void loadProfileImage(FirebaseUser user) {
         if (user.getPhotoUrl() != null) {
-            // If the user has a photo, load it into the ImageView
-            Glide.with(getContext())
-                    .load(user.getPhotoUrl())
-                    .into(profileImageView);
+            Glide.with(this).load(user.getPhotoUrl()).into(profileImageView);
         } else {
-            // Set a default image if the user doesn't have a profile photo
             profileImageView.setImageResource(R.drawable.ohms_law);
         }
     }
