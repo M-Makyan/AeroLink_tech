@@ -23,10 +23,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         this.postList = postList;
     }
 
-    @NonNull @Override
+    @NonNull
+    @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater
-                .from(parent.getContext())
+        View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_post, parent, false);
         return new PostViewHolder(view);
     }
@@ -57,14 +57,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             holder.image.setVisibility(View.GONE);
         }
 
-        // Click → detail, still pass username & timestamp along
+        // Click → detail by postId
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), PostDetailActivity.class);
-            intent.putExtra("title",       post.getTitle());
-            intent.putExtra("description", post.getDescription());
-            intent.putExtra("imageUrl",    post.getImageUrl());
-            intent.putExtra("username",    post.getUsername());
-            intent.putExtra("timestamp",   post.getTimestamp());
+            intent.putExtra("postId", post.getId());
             v.getContext().startActivity(intent);
         });
     }

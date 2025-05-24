@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/background">  <!-- Same background as the first layout -->
+    android:background="@drawable/background">
 
-    <!-- Search Bar -->
+    <!-- Search Bar with icon -->
     <EditText
         android:id="@+id/searchBar"
         android:layout_width="match_parent"
@@ -13,6 +12,8 @@
         android:layout_margin="20dp"
         android:background="@android:drawable/edit_text"
         android:hint="Search posts..."
+        android:imeOptions="actionSearch"
+        android:inputType="text"
         android:padding="10dp"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
@@ -22,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/searchBar"
-        android:layout_marginTop="8dp">  <!-- Added margin to make space for the search bar -->
+        android:layout_marginTop="8dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

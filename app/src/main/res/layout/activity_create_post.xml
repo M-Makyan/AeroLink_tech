@@ -62,6 +62,13 @@
                 android:visibility="gone"
                 android:background="@drawable/rounded_button" />
 
+            <Switch
+                android:id="@+id/locationSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Share my location"
+                android:layout_marginTop="10dp" />
+
             <Button
                 android:id="@+id/uploadImageButton"
                 android:layout_width="match_parent"

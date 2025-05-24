@@ -56,13 +56,11 @@ public class MyPostsAdapter extends RecyclerView.Adapter<MyPostsAdapter.MyPostVi
         }
 
         holder.btnDelete.setOnClickListener(v -> deleteListener.onDeleteClick(post, position));
+
+        // Open detail by postId instead of passing all fields
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), PostDetailActivity.class);
-            intent.putExtra("title", post.getTitle());
-            intent.putExtra("description", post.getDescription());
-            intent.putExtra("imageUrl", post.getImageUrl());
-            intent.putExtra("username", post.getUsername());
-            intent.putExtra("timestamp", post.getTimestamp());
+            intent.putExtra("postId", post.getId());
             v.getContext().startActivity(intent);
         });
     }
